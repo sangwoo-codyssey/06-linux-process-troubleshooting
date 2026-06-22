@@ -1,0 +1,44 @@
+# 스케줄링 추론 근거 — Healthy System Monitoring(MULTI_THREAD_ENABLE=false) Scheduler 구간 2회차
+# 실행 순서 재현성 확인용. 두 회차 모두 B → C → A 고정, run-to-completion(비선점).
+
+=== 회차 1 (16:44:52) ===
+[Scheduler] Registered Tasks: ['Thread-A', 'Thread-B', 'Thread-C']
+[Scheduler] Starting task execution...
+16:44:52,396 [Thread-B] Task Started. Calculating... (20%)
+16:44:52,448 [Thread-B] Calculating... (40%)
+16:44:52,499 [Thread-B] Calculating... (60%)
+16:44:52,554 [Thread-B] Calculating... (80%)
+16:44:52,610 [Thread-B] Task Completed. (100%)
+16:44:52,663 [Thread-C] Task Started. Calculating... (20%)
+16:44:52,716 [Thread-C] Calculating... (40%)
+16:44:52,768 [Thread-C] Calculating... (60%)
+16:44:52,820 [Thread-C] Calculating... (80%)
+16:44:52,874 [Thread-C] Task Completed. (100%)
+16:44:52,927 [Thread-A] Task Started. Calculating... (20%)
+16:44:52,979 [Thread-A] Calculating... (40%)
+16:44:53,036 [Thread-A] Calculating... (60%)
+16:44:53,089 [Thread-A] Calculating... (80%)
+16:44:53,144 [Thread-A] Task Completed. (100%)
+16:44:53,198 [Scheduler] All tasks completed.
+
+=== 회차 2 (17:05:07) ===
+[Scheduler] Registered Tasks: ['Thread-A', 'Thread-B', 'Thread-C']
+17:05:07,917 [Thread-B] Task Started. Calculating... (20%)
+17:05:07,968 [Thread-B] Calculating... (40%)
+17:05:08,019 [Thread-B] Calculating... (60%)
+17:05:08,074 [Thread-B] Calculating... (80%)
+17:05:08,128 [Thread-B] Task Completed. (100%)
+17:05:08,184 [Thread-C] Task Started. Calculating... (20%)
+17:05:08,236 [Thread-C] Calculating... (40%)
+17:05:08,287 [Thread-C] Calculating... (60%)
+17:05:08,338 [Thread-C] Calculating... (80%)
+17:05:08,394 [Thread-C] Task Completed. (100%)
+17:05:08,445 [Thread-A] Task Started. Calculating... (20%)
+17:05:08,501 [Thread-A] Calculating... (40%)
+17:05:08,552 [Thread-A] Calculating... (60%)
+17:05:08,607 [Thread-A] Calculating... (80%)
+17:05:08,659 [Thread-A] Task Completed. (100%)
+17:05:08,711 [Scheduler] All tasks completed.
+
+# 관찰: 등록 순서(A,B,C) != 실행 순서(B,C,A), 두 회차 동일. interleaving 없음.
+# 해석: 비선점 run-to-completion → FCFS 최선 추론 (비선점 Priority / 큰 quantum RR 은 구분 불가, 04-scheduling.md §3.3 참고).

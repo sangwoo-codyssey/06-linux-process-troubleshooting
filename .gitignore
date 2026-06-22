@@ -1,0 +1,21 @@
+# Dockerfile 변경 추적용 백업
+*.bak
+*.bak.*
+
+# 임시 로그 (컨테이너 작업용). 단, evidence/ 아래 보존 로그는 제출 증거이므로 추적
+*.log
+!evidence/**/*.log
+
+# 제공 바이너리 (학습자 산출물 아님, 대용량) — 분석 대상이지 제출물 아님
+agent-leak-app
+
+# 제출 외 자료
+HANDOFF.md
+reports/_my-drafts/
+
+# macOS
+.DS_Store
+
+# 에디터 메타
+.vscode/
+.idea/

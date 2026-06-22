@@ -1,0 +1,20 @@
+[2026-06-05 15:58:37] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:40] PIDS:756,764 SYS_CPU:0.9% SYS_MEM:48.3% APP_CPU:10.4% APP_MEM:0.3% APP_RSS_MB:33.6 DISK:5% THREADS:2 MT:false
+[2026-06-05 15:58:41] PIDS:756,764 SYS_CPU:0.9% SYS_MEM:49.0% APP_CPU:5.3% APP_MEM:0.6% APP_RSS_MB:58.6 DISK:5% THREADS:2 MT:false
+[2026-06-05 15:58:43] PIDS:756,764 SYS_CPU:0.9% SYS_MEM:49.5% APP_CPU:3.6% APP_MEM:0.9% APP_RSS_MB:83.6 DISK:5% THREADS:2 MT:false
+[2026-06-05 15:58:45] PIDS:756,764 SYS_CPU:0.9% SYS_MEM:49.3% APP_CPU:2.6% APP_MEM:0.9% APP_RSS_MB:83.6 DISK:5% THREADS:2 MT:false
+[2026-06-05 15:58:46] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:47] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:48] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:50] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:51] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:52] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:53] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:54] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:55] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:57] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:58] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:58:59] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:59:00] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:59:01] PROCESS_DOWN pattern=agent-leak-app
+[2026-06-05 15:59:02] PROCESS_DOWN pattern=agent-leak-app

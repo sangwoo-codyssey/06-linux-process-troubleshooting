@@ -1,0 +1,27 @@
+# MULTI_THREAD_ENABLE=false 대조군 — 동시성 경로 비활성화 시 정상 동작(Healthy System Monitoring)
+# (deadlock 회차와 동일 envfile, MT 값만 다름)
+
+ [ MEMORY ] Limit: 512MB 		[ OK ]
+ [ CPU    ] Limit: 20%  		[ OK ]
+ [ THREAD ] Concurrency: False 		[ OK ]
+--------------------------------------------------
+ >>> SYSTEM STATUS: STABLE. STARTING WORKLOAD MONITORING...
+==================================================
+
+2026-06-22 16:44:52,393 [INFO] >>> Scenario Selected: [Healthy System Monitoring]
+
+>>> [SYSTEM] ALL CONFIGURATIONS OPTIMAL. RUNNING STABILITY TEST... <<<
+
+2026-06-22 16:44:52,395 [INFO] [Scheduler] Task Scheduler Initialized.
+2026-06-22 16:44:52,395 [INFO] [Scheduler] Registered Tasks: ['Thread-A', 'Thread-B', 'Thread-C']
+2026-06-22 16:44:52,395 [INFO] [Scheduler] Starting task execution...
+2026-06-22 16:44:52,396 [INFO] [Thread-B] Task Started. Calculating... (20%)
+2026-06-22 16:44:52,610 [INFO] [Thread-B] Task Completed. (100%)
+2026-06-22 16:44:52,663 [INFO] [Thread-C] Task Started. Calculating... (20%)
+2026-06-22 16:44:52,874 [INFO] [Thread-C] Task Completed. (100%)
+2026-06-22 16:44:52,927 [INFO] [Thread-A] Task Started. Calculating... (20%)
+2026-06-22 16:44:53,144 [INFO] [Thread-A] Task Completed. (100%)
+2026-06-22 16:44:53,198 [INFO] [Scheduler] All tasks completed.
+2026-06-22 16:44:53,211 [INFO] [MemoryWorker] Current Heap: 25MB
+2026-06-22 16:44:53,211 [INFO] [CpuWorker] Started. Maximum CPU Limit: 20%
+# 이후 MemoryWorker / CpuWorker 정상 사이클 지속 (락 경합 없음, 교착 미발생)

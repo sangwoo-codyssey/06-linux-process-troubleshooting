@@ -1,0 +1,32 @@
+# Deadlock 정지 상태 스레드 스냅샷 (MULTI_THREAD_ENABLE=true)
+# child PID 32833 (Rosetta loader PID 32824)
+
+=== [증거1] ps -ef | grep agent  (PID 존재 — 프로세스 살아있음) ===
+agent-a+ 32824     0  0 16:57 ?  00:00:00 /run/rosetta/rosetta .../agent-leak-app ./agent-leak-app   (loader)
+agent-a+ 32833 32824  0 16:57 ?  00:00:00 /run/rosetta/rosetta .../agent-leak-app ./agent-leak-app   (child, 부하 집중)
+
+=== [증거2] ps -L -p 32833  (1차 스냅샷, 16:57:32) ===
+  PID   TID STAT %CPU     TIME COMMAND
+32833 32833 SNl   0.0 00:00:00 agent-leak-app   (main)
+32833 33004 SNl   0.0 00:00:00 agent-leak-app   (Worker-Thread-1)
+32833 33007 SNl   0.0 00:00:00 agent-leak-app   (Worker-Thread-2)
+
+=== [증거3] ps -L -p 32833  (2차 스냅샷, 16:58:50 — 78초 후, TIME 불변) ===
+  PID   TID STAT %CPU     TIME COMMAND
+32833 32833 SNl   0.0 00:00:00 agent-leak-app
+32833 33004 SNl   0.0 00:00:00 agent-leak-app
+32833 33007 SNl   0.0 00:00:00 agent-leak-app
+# 두 워커의 누적 TIME 이 0:00.00 그대로 = 락 획득 직후 멈춰 이후 단 한 틱의 CPU 도 안 씀
+
+=== [증거4] top -b -H -n1 -p 32833  (스레드별 CPU) ===
+Threads:   3 total,   0 running,   3 sleeping,   0 stopped,   0 zombie
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+32833 agent-a+  30  10  460708  25612  10428 S   0.0   0.3   0:00.09 agent-lea+
+33004 agent-a+  30  10  460708  25612  10428 S   0.0   0.3   0:00.00 agent-lea+
+33007 agent-a+  30  10  460708  25612  10428 S   0.0   0.3   0:00.00 agent-lea+
+
+=== [증거5] /proc/32833/task/*/status  State 필드 ===
+TID 32833: State:	S (sleeping)
+TID 33004: State:	S (sleeping)
+TID 33007: State:	S (sleeping)
+# R(running) 이 아니라 S(sleeping) = busy-wait 가 아니라 락 대기 큐에서 잠든 상태

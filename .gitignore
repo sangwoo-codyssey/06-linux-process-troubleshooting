@@ -6,9 +6,6 @@
 *.log
 !evidence/**/*.log
 
-# 제공 바이너리 (학습자 산출물 아님, 대용량) — 분석 대상이지 제출물 아님
-agent-leak-app
-
 # 제출 외 자료
 HANDOFF.md
 reports/_my-drafts/
